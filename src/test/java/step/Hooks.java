@@ -1,8 +1,7 @@
-package tests;
+package step;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
 
 import common.ProjectConfig;
 import cucumber.api.java.After;

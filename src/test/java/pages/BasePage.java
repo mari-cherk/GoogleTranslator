@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static io.appium.java_client.touch.offset.PointOption.point;
-import static tests.Hooks.getDriver;
+import static step.Hooks.getDriver;
 
 public class BasePage {
     protected WebDriverWait wait;
