@@ -13,7 +13,7 @@ public class SettingsModal extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Настройка')]")
     private MobileElement settingsModalTitle;
     @AndroidFindBy (xpath = "//*[contains(@text,'Основной язык')][1]")
-    private MobileElement primeryLanguageLabel;
+    private MobileElement primaryLanguageLabel;
     @AndroidFindBy (xpath = "//*[contains(@text,'Основной язык перевода')]")
     private MobileElement translationLanguageLabel;
     @AndroidFindBy (className = "android.widget.CheckBox")
@@ -21,9 +21,9 @@ public class SettingsModal extends BasePage {
     @AndroidFindBy (className = "android.widget.Button")
     private MobileElement closeButton;
     @AndroidFindBy (xpath = "//*[@resource-id='com.google.android.apps.translate:id/primary_lang_spinner']/*[@resource-id='android:id/text1']")
-    private MobileElement primeryLanguage;
+    private MobileElement primaryLanguage;
     @AndroidFindBy (xpath = "//*[@class='android.widget.CheckedTextView' and @index='1']")
-    private MobileElement chosenPrimeryLanguage;
+    private MobileElement chosenPrimaryLanguage;
     @AndroidFindBy (xpath = "//*[@resource-id='com.google.android.apps.translate:id/translation_lang_spinner']/*[@resource-id='android:id/text1']")
     private MobileElement translationLanguage;
     @AndroidFindBy (xpath = "//*[@class='android.widget.CheckedTextView' and @index='1']")
@@ -41,8 +41,31 @@ public class SettingsModal extends BasePage {
 
     public boolean isSettingsModalDisplayed() {
         return isElementPresent(settingsModalTitle)
-                && isElementPresent(primeryLanguageLabel)
+                && isElementPresent(primaryLanguageLabel)
                 &&isElementPresent(translationLanguageLabel)
                 && settingsModalTitle.getText().equalsIgnoreCase("Настройка");
+    }
+
+    public boolean isCloseButtonPresent() {
+        return isElementPresent(closeButton);
+    }
+
+    public void tapPrimaryLanguage(){
+        tapElement(primaryLanguage);
+    }
+
+    public String getChosenPrimaryLanguage(){
+        waitToBeVisible(chosenPrimaryLanguage);
+        return chosenPrimaryLanguage.getText();
+    }
+
+    public void tapChosenPrimaryLanguage(){
+        waitToBeVisible(chosenPrimaryLanguage);
+        tapElement(chosenPrimaryLanguage);
+    }
+
+    public String getPrimaryLanguage(){
+        waitToBeVisible(primaryLanguage);
+        return primaryLanguage.getText();
     }
 }
