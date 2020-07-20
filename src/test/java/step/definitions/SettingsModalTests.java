@@ -1,17 +1,13 @@
 package step.definitions;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import cucumber.api.java.en.When;
-import org.assertj.core.api.Assert;
 import pages.modals.SettingsModal;
-import utils.DeviceService;
 
 import static org.junit.Assert.assertEquals;
-import static step.Hooks.getDriver;
 
 public class SettingsModalTests {
 
@@ -19,16 +15,12 @@ public class SettingsModalTests {
 
     @Given("^I am launching the application$")
     public void i_am_launching_the_application() {
-        /*DeviceService deviceService = new DeviceService(getDriver());
-        deviceService.removeApp();
-        deviceService.installNewBuild();*/
         assertThat(settingsModal.isSettingsModalDisplayed()).isEqualTo(true);
 
     }
 
     @Then("^The Settings Modal opens$")
     public void the_Settings_Modal_opens() {
-        //assertThat(settingsModal.isSettingsModalDisplayed()).isEqualTo(true);
         assertThat(settingsModal.isCloseButtonPresent()).isEqualTo(true);
     }
 
@@ -37,20 +29,42 @@ public class SettingsModalTests {
         assertThat(settingsModal.isSettingsModalDisplayed()).isEqualTo(true);
     }
 
-    @When("^I change primary language$")
-    public void i_change_primary_language() {
+
+    @When("^I change primary language to language$")
+    public void i_change_primary_language_to_English() {
         settingsModal.tapPrimaryLanguage();
-        String neededLanguage = settingsModal.getChosenPrimaryLanguage();
-        System.out.println(neededLanguage);
-        settingsModal.tapChosenPrimaryLanguage();
-        System.out.println(settingsModal.getPrimaryLanguage());
-        assertEquals("The primary language wasn't changed", neededLanguage, settingsModal.getPrimaryLanguage().toLowerCase());
+        //settingsModal.scrollToTopLanguage(settingsModal.azerPrimaryLanguage);
+        //settingsModal.scrollDownToLanguage(language);
+        settingsModal.chooseLanguage("самоанский");
     }
 
-    @Then("^The changing primary language is applied$")
-    public void the_changing_primary_language_is_applied() {
-        assertThat(settingsModal.getPrimaryLanguage().contains("РУССКИЙ")).isEqualTo(false);
+    @Then("^The language primary language is applied$")
+    public void the_English_primary_language_is_applied(){
+        assertThat(settingsModal.getPrimaryLanguage().contains("САМОАНСКИЙ")).isEqualTo(true);
     }
 
+    @When("^I change translation language to \"([^\"]*)\"$")
+    public void i_change_translation_language_to(String language) {
+        settingsModal.tapTranslationLanguage();
+        //settingsModal.scrollToTopLanguage(settingsModal.azerPrimaryLanguage);
+        //settingsModal.scrollDownToLanguage(language);
+        settingsModal.chooseLanguage(language);
+
+    }
+
+    @Then("^The \"([^\"]*)\" translation language is applied$")
+    public void the_translation_language_is_applied(String chosenLanguage) {
+        assertThat(settingsModal.getTranslationLanguage().contains(chosenLanguage)).isEqualTo(true);
+    }
+
+    @When("^I tap translation checkbox$")
+    public void i_tap_translation_checkbox() {
+        settingsModal.tapOfflineCheckbox();
+    }
+
+    @Then("^The translation checkbox is unchecked$")
+    public void the_translation_checkbox_is_unchecked() {
+        assertThat(settingsModal.isOfflineCheckboxChecked()).isEqualTo(false);
+    }
 
 }

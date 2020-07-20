@@ -71,11 +71,31 @@ public class BasePage {
         }
     }
 
+    protected void scrollDownList(int count) {
+        Dimension dimension = getDriver().manage().window().getSize();
+        int startX = dimension.getWidth() / 2;
+        int startY = (int) (dimension.getHeight() * 0.85);
+        int endY = (int) (dimension.getHeight() * 0.5);
+        for (int i = 0; i < count; i++) {
+            baseSwipe(startX, startY, startX, endY);
+        }
+    }
+
     protected void scrollUp(int count) {
         Dimension dimension = getDriver().manage().window().getSize();
         int startX = dimension.getWidth() / 2;
         int startY = (int) (dimension.getHeight() * 0.3);
         int endY = (int) (dimension.getHeight() * 0.6);
+        for (int i = 0; i < count; i++) {
+            baseSwipe(startX, startY, startX, endY);
+        }
+    }
+
+    protected void scrollUpList(int count) {
+        Dimension dimension = getDriver().manage().window().getSize();
+        int startX = dimension.getWidth() / 2;
+        int startY = (int) (dimension.getHeight() * 0.5);
+        int endY = (int) (dimension.getHeight() * 0.85);
         for (int i = 0; i < count; i++) {
             baseSwipe(startX, startY, startX, endY);
         }
@@ -92,5 +112,18 @@ public class BasePage {
         }
         // to scroll card into view fully
         scrollDown(1);
+    }
+
+    protected void scrollUpToElementInList(MobileElement element) {
+        for (int i = 0; i < 10; i++) {
+            try {
+                waitToBeVisible(element);
+                break;
+            } catch (NoSuchElementException | TimeoutException e) {
+                scrollUpList(2);
+            }
+        }
+        // to scroll card into view fully
+        scrollUpList(1);
     }
 }
