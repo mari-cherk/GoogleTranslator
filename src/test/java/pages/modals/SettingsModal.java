@@ -73,6 +73,10 @@ public class SettingsModal extends BasePage {
         tapElement(translationLanguage);
     }
 
+    public void tapCloseButton(){
+        tapElement(closeButton);
+    }
+
     public String getPrimaryLanguage(){
         waitToBeVisible(primaryLanguage);
         return primaryLanguage.getText();
@@ -96,42 +100,59 @@ public class SettingsModal extends BasePage {
         scrollUpList(1);
     }
 
-    public void scrollDownToLanguage(String language){
-        //MobileElement element = getDriver().findElement(By.xpath("//*[contains(@text,'" + language +"')]"));
-        for (int i = 0; i < 10; i++) {
-            try {
-                waitToBeVisible(getDriver().findElement(By.xpath("//*[contains(@text,'" + language +"')]")));
-                break;
-            } catch (NoSuchElementException | TimeoutException e) {
-                scrollDownList(1);
-            }
-        }
-        // to scroll card into view fully
-        scrollDownList(1);
-    }
-
-    public void chooseNeededLanguage(String language) {
-        if (getDriver().findElement(By.xpath("//*[contains(@text,'" + language + "')]")).isDisplayed()) {
-            tapElement(getDriver().findElement(By.xpath("//*[contains(@text,'" + language + "')]")));
-        } else {
+    public void scrollDownToLanguage(String language) {
+            String xPath = String.format("//*[@text='%s']", language);
             for (int i = 0; i < 10; i++) {
                 try {
-                    waitToBeVisible(getDriver().findElement(By.xpath("//*[contains(@text,'" + language + "')]")));
+                    waitToBeVisible(getDriver().findElement(By.xpath(xPath)));
                     break;
                 } catch (NoSuchElementException | TimeoutException e) {
                     scrollDownList(1);
                 }
             }
             // to scroll card into view fully
-            tapElement(getDriver().findElement(By.xpath("//*[contains(@text,'" + language + "')]")));
+            //scrollDownList(1);
+    }
+
+    public void chooseNeededLanguage(String language) {
+        String xPath = String.format("//*[contains(@text,'%s')]", language);
+        if (getDriver().findElement(By.xpath(xPath)).isDisplayed()) {
+            tapElement(getDriver().findElement(By.xpath(xPath)));
+        } else {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    waitToBeVisible(getDriver().findElement(By.xpath(xPath)));
+                    break;
+                } catch (NoSuchElementException | TimeoutException e) {
+                    scrollDownList(1);
+                }
+            }
+            // to scroll card into view fully
+            tapElement(getDriver().findElement(By.xpath(xPath)));
         }
     }
 
     public void chooseLanguage(String language) {
-        String xPath = "//*[contains(@text,'" + language + "')]";
+        String xPath = String.format("//*[contains(@text,'%s')]", language);
         waitToBeVisible(getDriver().findElement(By.xpath(xPath)));
             tapElement(getDriver().findElement(By.xpath(xPath)));
     }
 
+    public void scrollDownToLanguage1(String language) {
+        //String xPath = String.format("//*[contains(@text,'%s')]", language);
+        //String xPath = String.format("//*[contains(@text,'тайский')]");
+        String xPath = String.format("//*[@text='%s']", language);
+        MobileElement element = getDriver().findElement(By.xpath(xPath));
+        for (int i = 0; i < 10; i++) {
+
+            if(element.isDisplayed()){
+                break;
+            } else {
+                scrollDownList(1);
+            }
+        }
+        // to scroll card into view fully
+        scrollDownList(1);
+    }
 
 }

@@ -3,15 +3,14 @@ package step.definitions;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import static org.assertj.core.api.Assertions.assertThat;
-
 import cucumber.api.java.en.When;
 import pages.modals.SettingsModal;
-
-import static org.junit.Assert.assertEquals;
+import pages.modals.UserMenu;
 
 public class SettingsModalTests {
 
     SettingsModal settingsModal = new SettingsModal();
+    UserMenu userMenu = new UserMenu();
 
     @Given("^I am launching the application$")
     public void i_am_launching_the_application() {
@@ -30,24 +29,24 @@ public class SettingsModalTests {
     }
 
 
-    @When("^I change primary language to language$")
-    public void i_change_primary_language_to_English() {
+    @When("^I change primary language to \"([^\"]*)\"$")
+    public void i_change_primary_language_to(String language) {
         settingsModal.tapPrimaryLanguage();
-        //settingsModal.scrollToTopLanguage(settingsModal.azerPrimaryLanguage);
-        //settingsModal.scrollDownToLanguage(language);
-        settingsModal.chooseLanguage("самоанский");
+        settingsModal.scrollToTopLanguage(settingsModal.azerPrimaryLanguage);
+        settingsModal.scrollDownToLanguage(language);
+        settingsModal.chooseLanguage(language);
     }
 
-    @Then("^The language primary language is applied$")
-    public void the_English_primary_language_is_applied(){
-        assertThat(settingsModal.getPrimaryLanguage().contains("САМОАНСКИЙ")).isEqualTo(true);
+    @Then("^The \"([^\"]*)\" primary language is applied$")
+    public void the_primary_language_is_applied(String chosenLanguage){
+        assertThat(settingsModal.getPrimaryLanguage().contains(chosenLanguage)).isEqualTo(true);
     }
 
     @When("^I change translation language to \"([^\"]*)\"$")
     public void i_change_translation_language_to(String language) {
         settingsModal.tapTranslationLanguage();
-        //settingsModal.scrollToTopLanguage(settingsModal.azerPrimaryLanguage);
-        //settingsModal.scrollDownToLanguage(language);
+        settingsModal.scrollToTopLanguage(settingsModal.azerPrimaryLanguage);
+        settingsModal.scrollDownToLanguage(language);
         settingsModal.chooseLanguage(language);
 
     }
@@ -65,6 +64,21 @@ public class SettingsModalTests {
     @Then("^The translation checkbox is unchecked$")
     public void the_translation_checkbox_is_unchecked() {
         assertThat(settingsModal.isOfflineCheckboxChecked()).isEqualTo(false);
+    }
+
+    @When("^I tap Close button$")
+    public void i_tap_Close_button() {
+        settingsModal.tapCloseButton();
+    }
+
+    @Then("^The Settings Modal closes$")
+    public void the_Settings_Modal_closes() {
+        assertThat(settingsModal.isSettingsModalDisplayed()).isEqualTo(false);
+    }
+
+    @Then("^The User Menu opens$")
+    public void the_User_Menu_opens() {
+        assertThat(userMenu.isUserMenuDisplayed()).isEqualTo(true);
     }
 
 }
