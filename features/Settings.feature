@@ -1,4 +1,4 @@
-@smoke
+
 Feature: Settings Modal
 
   Scenario: Settings Modal should be shown when starting the app

@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.PageFactory;
 import pages.BasePage;
@@ -110,26 +111,7 @@ public class SettingsModal extends BasePage {
                     scrollDownList(1);
                 }
             }
-            // to scroll card into view fully
-            //scrollDownList(1);
-    }
 
-    public void chooseNeededLanguage(String language) {
-        String xPath = String.format("//*[contains(@text,'%s')]", language);
-        if (getDriver().findElement(By.xpath(xPath)).isDisplayed()) {
-            tapElement(getDriver().findElement(By.xpath(xPath)));
-        } else {
-            for (int i = 0; i < 10; i++) {
-                try {
-                    waitToBeVisible(getDriver().findElement(By.xpath(xPath)));
-                    break;
-                } catch (NoSuchElementException | TimeoutException e) {
-                    scrollDownList(1);
-                }
-            }
-            // to scroll card into view fully
-            tapElement(getDriver().findElement(By.xpath(xPath)));
-        }
     }
 
     public void chooseLanguage(String language) {
@@ -138,21 +120,8 @@ public class SettingsModal extends BasePage {
             tapElement(getDriver().findElement(By.xpath(xPath)));
     }
 
-    public void scrollDownToLanguage1(String language) {
-        //String xPath = String.format("//*[contains(@text,'%s')]", language);
-        //String xPath = String.format("//*[contains(@text,'тайский')]");
-        String xPath = String.format("//*[@text='%s']", language);
-        MobileElement element = getDriver().findElement(By.xpath(xPath));
-        for (int i = 0; i < 10; i++) {
-
-            if(element.isDisplayed()){
-                break;
-            } else {
-                scrollDownList(1);
-            }
-        }
-        // to scroll card into view fully
-        scrollDownList(1);
+    public void rotateToLandscape(){
+        getDriver().rotate(ScreenOrientation.LANDSCAPE);
     }
 
 }
