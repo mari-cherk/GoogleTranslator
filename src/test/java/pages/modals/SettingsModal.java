@@ -1,5 +1,7 @@
 package pages.modals;
 
+import java.time.Duration;
+
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -123,5 +125,10 @@ public class SettingsModal extends BasePage {
     public void rotateToLandscape(){
         getDriver().rotate(ScreenOrientation.LANDSCAPE);
     }
+
+    public void goToBackgroundMode(long mills){
+        getDriver().runAppInBackground(Duration.ofMillis(mills));
+    }
+
 
 }
